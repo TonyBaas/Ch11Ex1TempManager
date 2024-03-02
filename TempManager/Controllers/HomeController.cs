@@ -24,6 +24,11 @@ namespace Ch11Ex1TempManager.Controllers
         [HttpPost]
         public IActionResult Add(Temp temp)
         {
+            Temp dateCheck = data.Temps.FirstOrDefault(t => t.Date == temp.Date);
+            if (dateCheck != null)
+            {
+                ModelState.AddModelError("Date", $"This date is already in the database.");
+            }
 
             if (ModelState.IsValid) {
                 data.Temps.Add(temp);
