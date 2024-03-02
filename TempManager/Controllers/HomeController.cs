@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using TempManager.Models;
 
 namespace Ch11Ex1TempManager.Controllers
@@ -21,6 +24,7 @@ namespace Ch11Ex1TempManager.Controllers
         [HttpPost]
         public IActionResult Add(Temp temp)
         {
+
             if (ModelState.IsValid) {
                 data.Temps.Add(temp);
                 data.SaveChanges();
@@ -28,6 +32,7 @@ namespace Ch11Ex1TempManager.Controllers
                 return RedirectToAction("Index");
             } 
             else {
+                ModelState.AddModelError("", "Please correct all errors.");
                 return View(temp);
             }
         }
